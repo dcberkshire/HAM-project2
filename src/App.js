@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 function App() {
 	const [artCollections, setArtCollections] = useState({});
+	let [counter, setCounter] = useState(0);
 	const getArt = (search = '') => {
 		if (search) {
 			search = `&q=${search}`;
@@ -30,7 +31,16 @@ function App() {
 			<header className='App-header'>
 				<h1></h1>
 			</header>
-			<main></main>
+
+			<main>
+				<img
+					className='main-img'
+					src={
+						artCollections.records &&
+						artCollections.records[counter].baseimageurl
+					}
+				/>
+			</main>
 		</>
 	);
 }
