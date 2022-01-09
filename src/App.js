@@ -32,7 +32,7 @@ function App() {
 			<header className='App-header'>
 				<h1></h1>
 			</header>
-			<Main artCollections={artCollections} setArtCollections={setArtCollections} counter={counter} setCounter=
+			<Main artCollections={artCollections.records} setArtCollections={setArtCollections} counter={counter} setCounter=
 			{setCounter}/>
 		</>
 	);
