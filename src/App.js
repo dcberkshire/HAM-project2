@@ -1,5 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+import Main from './component/Main';
 
 function App() {
 	const [artCollections, setArtCollections] = useState({});
@@ -31,16 +32,8 @@ function App() {
 			<header className='App-header'>
 				<h1></h1>
 			</header>
-
-			<main>
-				<img
-					className='main-img'
-					src={
-						artCollections.records &&
-						artCollections.records[counter].baseimageurl
-					}
-				/>
-			</main>
+			<Main artCollections={artCollections} setArtCollections={setArtCollections} counter={counter} setCounter=
+			{setCounter}/>
 		</>
 	);
 }
