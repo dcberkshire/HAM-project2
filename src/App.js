@@ -5,29 +5,31 @@ import Header from './component/Header';
 
 function App() {
 	const [artCollections, setArtCollections] = useState([]);
-	// let [counter, setCounter] = useState(0);
-	const getArt = (search = '', type = '') => {
+	let [counter, setCounter] = useState(0);
+	const getArt = async (search = '', type = '') => {
+		let q = '';
 		if (search) {
-			search = `&q=${search}`;
+			q = `?q=${search}&`;
 		}
+		let url = `https://api.harvardartmuseums.org/object?${q}apikey=${process.env.REACT_APP_API_KEY}&size=20&hasimage=1&q=imagepermissionlevel:0&page=${counter}`;
 
-		let url = `https://api.harvardartmuseums.org/object?${search}apikey=${process.env.REACT_APP_API_KEY}&size=20&hasimage=1&q=imagepermissionlevel:0`;
-
-		fetch(url)
+		const getCollection = fetch(url)
 			.then((response) => {
 				return response.json();
 			})
 			.then((res) => {
-				if (type === 'prev') {
-					setArtCollections((art) => [res.records, ...art]);
+				if (type === 'prev' || search) {
+					setArtCollections((art) => [...res.records, ...art]);
+				} else if (type === 'next') {
+					setArtCollections((art) => [...art, ...res.records]);
+				} else {
+					setArtCollections(res.records);
 				}
-				if (type === 'next') {
-					setArtCollections((art) => [...art, res.records]);
-				}
-				console.log(res);
-				setArtCollections(res.records);
+				return true;
 			})
-			.catch((error) => console.log('error', error));
+			.catch((error) => false);
+		setCounter(counter + 1);
+		return getCollection;
 	};
 
 	useEffect(() => {
@@ -36,17 +38,17 @@ function App() {
 
 	return (
 		<div className='wrapper-app'>
-			<div className='header'>
-				<Header />
-			</div>
-			<div className='main'>
+			<header>
+				<Header getArt={getArt} />
+			</header>
+			<main>
 				<Main
 					artCollections={artCollections}
 					setArtCollections={setArtCollections}
 					getArt={getArt}
 				/>
-			</div>
-			<div clssName='footer'></div>
+			</main>
+			<footer></footer>
 		</div>
 	);
 }

@@ -1,54 +1,41 @@
-import { useEffect, useState, useReducer } from 'react';
+import { useReducer } from 'react';
 import React from 'react';
 import './style.css'
 
 function Main(props) {
-    const [artCollections, setArtCollections] = useState([]);
-    const counterReducer = (state, action) => {
+
+    const counterReducer =  (state, action) => {
         switch(action.type) {
             case 'NEXT' :
-                if (state === props.artCollections && props.artCollections.length - 2){
+                if (Number(state) === Number(props.artCollections.length - 1)){
                     props.getArt('', 'next')
-                } 
-                console.log('hit next')
+                    return state +=1
+                }
                 return state += 1
             case 'PREVIOUS' : 
-                if (state !== 0) {
-                   return state -= 1
+                if (state === 0) {
+                    props.getArt('', 'prev')
+                   return state += 20
                 }
-                return state;
-            case 'INIT' :
-                if(props.artCollections && props.artCollections.length) {
-                    return Math.floor(props.artCollections.length / 2)
-                }
-                return state;
+                return state -= 1;
             default:
                 return state
         }
     }
 
-    const [count, dispatchEvent] = useReducer(counterReducer, 0);
-    useEffect(() => {
-        dispatchEvent({type: 'INIT'})
-    }, [])
+    const [count, dispatchEvent] = useReducer(counterReducer, 10);
 
-    useEffect(() => {
-        setArtCollections(props.artCollections)
-    }, [props.artCollections])
-    console.log(count, artCollections)
     return (
         <div className='main-body'>
-            <button className='prev-btn' onClick={() => dispatchEvent({type: 'PREVIOUS'})}>←</button>
+            <button className='btn btn-prev' onClick={() => dispatchEvent({type: 'PREVIOUS'})}>←</button>
+            <div className='art-div'>
+                <p className='img-title'>Title - {props.artCollections[count] && props.artCollections[count].title}</p>
+    
+                <img className='main-img' src={props.artCollections[count] && props.artCollections[count].primaryimageurl} />
+                <p className='description'>Technique Used - {props.artCollections[count] && props.artCollections[count].technique}</p>
+            </div>
 
-            <p className='img-title'>Title - {props.artCollections[count] && props.artCollections[count].title}</p>
-
-            {/* <p className='time-period'>Time Period - {props.artCollections[count] && props.artCollections[count].century}</p> */}
-
-            <img className='main-img' src={props.artCollections[count] && props.artCollections[count].primaryimageurl} />
-
-            <button className='next-btn' onClick={() => dispatchEvent({type: 'NEXT'})}>→</button>
-
-            <p className='description'>Technique Used - {props.artCollections[count] && props.artCollections[count].technique}</p>
+            <button className='btn btn-next' onClick={() => dispatchEvent({type: 'NEXT'})}>→</button>
         </div>
     );
 }

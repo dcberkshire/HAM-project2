@@ -4,3 +4,29 @@
 	align-items: center;
 	margin: 20px 0px 40px 0px;
 }
+
+.error {
+	width: 100%;
+	text-align: center;
+	height: 20px;
+	margin: 10px 0px;
+	color: red;
+}
+
+form {
+	width: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+input {
+	width: 100%;
+}
+
+input:focus {
+	outline: none;
+}
+
+button:focus {
+	outline: none;
+}
