@@ -1,0 +1,43 @@
+.main-img {
+	width: 350px;
+	height: 350px;
+	margin: 20px 0px;
+}
+
+.main-body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn {
+	width: 100px;
+	height: 40px;
+	border: 1px solid black;
+	border-radius: 63px;
+}
+
+.btn-prev {
+	margin-right: 50px;
+}
+
+.btn-next {
+	margin-left: 50px;
+}
+
+.art-div {
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+p {
+	text-align: center;
+	text-overflow: ellipsis;
+}
+
+.img-title {
+	width: 100%;
+	height: 60px;
+}
