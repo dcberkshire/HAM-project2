@@ -2,6 +2,8 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Main from './component/Main';
 import Header from './component/Header';
+import Modal from './component/Footer/Modal.jsx';
+import { AboutButton } from './component/Footer/Button.jsx';
 
 function App() {
 	const [artCollections, setArtCollections] = useState([]);
@@ -36,6 +38,8 @@ function App() {
 		getArt();
 	}, []);
 
+	const [show, setShow] = useState(false);
+
 	return (
 		<div className='wrapper-app'>
 			<header>
@@ -48,7 +52,10 @@ function App() {
 					getArt={getArt}
 				/>
 			</main>
-			<footer></footer>
+			<footer>
+				<AboutButton onClick={() => setShow(!show)}>About</AboutButton>
+				{show && <Modal />}
+			</footer>
 		</div>
 	);
 }
